@@ -1,0 +1,82 @@
+@model IEnumerable<TechnicalTest.Models.Product>
+    @using System.Globalization
+
+    @{
+    ViewData["Title"] = "Index";
+    }
+
+    <h1>Products</h1>
+
+    <p>
+        <a asp-action="Create" class="btn btn-outline-success btn-sm">Create New</a>
+        <a asp-action="Trash" class="btn btn-outline-warning btn-sm">View Trash</a>
+    </p>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Name)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Price)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.ProductCategory)
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model) {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @string.Format(new CultureInfo("id-ID"), "Rp{0:N0}", item.Price)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ProductCategory.Name)
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-outline-primary btn-sm">Edit</a>
+                    <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-outline-success btn-sm">Details</a>
+                    <form asp-action="SoftDelete" asp-route-id="@item.Id" method="post" class="delete-form d-inline">
+                        <button type="submit" class="btn btn-outline-warning btn-sm">Trash</button>
+                    </form>
+
+                </td>
+            </tr>
+}
+        </tbody>
+    </table>
+    @section Scripts {
+        <partial name="_ValidationScriptsPartial" />
+        <script>
+            document.addEventListener("DOMContentLoaded", function () {
+                const forms = document.querySelectorAll(".delete-form");
+
+                forms.forEach(form => {
+                    form.addEventListener("submit", function (e) {
+                        e.preventDefault(); // Stop normal form submission
+
+                        Swal.fire({
+                            title: 'Are you sure?',
+                            text: "This product will be moved to trash.",
+                            icon: 'warning',
+                            showCancelButton: true,
+                            confirmButtonColor: '#d33',
+                            cancelButtonColor: '#3085d6',
+                            confirmButtonText: 'Yes, move it!',
+                            cancelButtonText: 'Cancel'
+                        }).then((result) => {
+                            if (result.isConfirmed) {
+                                form.submit(); // Proceed if confirmed
+                            }
+                        });
+                    });
+                });
+            });
+        </script>
+    }
+

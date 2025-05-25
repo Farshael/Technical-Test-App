@@ -1,0 +1,45 @@
+@model TechnicalTest.Models.Product
+
+@{
+    ViewData["Title"] = "Create Product";
+}
+
+<div class="container mt-4">
+    <div class="card shadow-sm">
+        <div class="card-header text-dark">
+            <h5 class="mb-0">Create Product</h5>
+        </div>
+        <div class="card-body">
+            <form asp-action="Create">
+                <div asp-validation-summary="ModelOnly" class="alert alert-danger" role="alert"></div>
+
+                <div class="mb-3">
+                    <label asp-for="Name" class="form-label"></label>
+                    <input asp-for="Name" class="form-control" />
+                    <span asp-validation-for="Name" class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="Price" class="form-label"></label>
+                    <input asp-for="Price" class="form-control" />
+                    <span asp-validation-for="Price" class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="ProductCategoryId" class="form-label"></label>
+                    <select asp-for="ProductCategoryId" class="form-select" asp-items="ViewBag.ProductCategoryId"></select>
+                    <span asp-validation-for="ProductCategoryId" class="text-danger"></span>
+                </div>
+
+                <div class="d-flex justify-content-between">
+                    <a asp-action="Index" class="btn btn-outline-secondary btn-sm">Back to List</a>
+                    <button type="submit" class="btn btn-outline-success btn-sm">Create</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

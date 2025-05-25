@@ -1,0 +1,72 @@
+@model IEnumerable<TechnicalTest.Models.ProductCategory>
+
+@{
+    ViewData["Title"] = "Trash - Product Categories";
+}
+
+<div class="container mt-4">
+    <h1 class="mb-3">@ViewData["Title"]</h1>
+
+    <p>
+        <a asp-action="Index" class="btn btn-outline-secondary btn-sm">Back to List</a>
+    </p>
+
+    @if (!Model.Any())
+    {
+        <div class="alert alert-info">Trash is empty.</div>
+    }
+    else
+    {
+        <table class="table table-bordered table-hover">
+            <thead class="table-light">
+                <tr>
+                    <th>@Html.DisplayNameFor(model => model.Name)</th>
+                    <th style="width: 220px;">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@item.Name</td>
+                        <td>
+                            <form asp-action="Restore" asp-route-id="@item.Id" method="post" class="d-inline">
+                                <button type="submit" class="btn btn-outline-success btn-sm">Restore</button>
+                            </form>
+                            <form asp-action="DeletePermanent" asp-route-id="@item.Id" method="post" class="delete-permanent-form d-inline">
+                                <button type="submit" class="btn btn-outline-danger btn-sm">Delete Permanently</button>
+                            </form>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+</div>
+
+@section Scripts {
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const deleteForms = document.querySelectorAll(".delete-permanent-form");
+            deleteForms.forEach(form => {
+                form.addEventListener("submit", function (e) {
+                    e.preventDefault();
+                    Swal.fire({
+                        title: 'Delete permanently?',
+                        text: "This action cannot be undone!",
+                        icon: 'warning',
+                        showCancelButton: true,
+                        confirmButtonColor: '#d33',
+                        cancelButtonColor: '#6c757d',
+                        confirmButtonText: 'Yes, delete!',
+                        cancelButtonText: 'Cancel'
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            form.submit();
+                        }
+                    });
+                });
+            });
+        });
+    </script>
+}

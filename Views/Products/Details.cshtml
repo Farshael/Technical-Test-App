@@ -1,0 +1,43 @@
+@model TechnicalTest.Models.Product
+@using System.Globalization
+
+@{
+    ViewData["Title"] = "Product Details";
+}
+
+<div class="container mt-4">
+    <div class="card shadow-sm">
+        <div class="card-header text-dark">
+            <h5 class="mb-0">@ViewData["Title"]</h5>
+        </div>
+        <div class="card-body">
+            <dl class="row">
+                <dt class="col-sm-3">
+                    @Html.DisplayNameFor(model => model.Name)
+                </dt>
+                <dd class="col-sm-9">
+                    @Html.DisplayFor(model => model.Name)
+                </dd>
+
+                <dt class="col-sm-3">
+                    @Html.DisplayNameFor(model => model.Price)
+                </dt>
+                <dd class="col-sm-9">
+                    @string.Format(new CultureInfo("id-ID"), "Rp{0:N0}", Model.Price)
+                </dd>
+
+                <dt class="col-sm-3">
+                    @Html.DisplayNameFor(model => model.ProductCategory)
+                </dt>
+                <dd class="col-sm-9">
+                    @Html.DisplayFor(model => model.ProductCategory.Name)
+                </dd>
+            </dl>
+
+            <div class="d-flex justify-content-between">
+                <a asp-action="Edit" asp-route-id="@Model?.Id" class="btn btn-outline-primary btn-sm">Edit</a>
+                <a asp-action="Index" class="btn btn-outline-secondary btn-sm">Back to List</a>
+            </div>
+        </div>
+    </div>
+</div>

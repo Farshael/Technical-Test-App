@@ -1,0 +1,28 @@
+﻿@using TechnicalTest.Models
+@inject Microsoft.AspNetCore.Identity.UserManager<AppUser>     UserManager
+@inject Microsoft.AspNetCore.Identity.SignInManager<AppUser>    SignInManager
+
+
+    @{
+    AppUser? user = null;
+
+    if (SignInManager?.IsSignedIn(User) == true)
+    {
+        var getUserTask = UserManager.GetUserAsync(User);
+        getUserTask.Wait();
+        user = getUserTask.Result;
+    }
+    }
+
+    <div class="text-center">
+        <h1 class="display-4">Welcome to Swanique!</h1>
+
+        @if (user != null)
+    {
+        <span class="me-2 small text-dark fw-normal">Hi, @user.FullName</span>
+    }
+    </div>
+
+    <footer class="footer text-center">
+        © 2025 Swanique! by Farsha
+    </footer>

@@ -1,0 +1,70 @@
+@model IEnumerable<TechnicalTest.Models.Product>
+
+@{
+    ViewData["Title"] = "Trash";
+}
+
+<h1>Deleted Products</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Price</th>
+            <th>Category</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>@item.Name</td>
+            <td>@item.Price.ToString("C0", new System.Globalization.CultureInfo("id-ID"))</td>
+            <td>@item.ProductCategory?.Name</td>
+            <td>
+                <form asp-action="Restore" asp-route-id="@item.Id" method="post" style="display:inline">
+                    <button type="submit" class="btn btn-outline-primary btn-sm">Restore</button>
+                </form>
+              <form asp-action="DeletePermanent" asp-route-id="@item.Id" method="post" class="delete-permanent-form d-inline">
+    <button type="submit" class="btn btn-outline-danger btn-sm">Delete Permanently</button>
+</form>
+
+            </td>
+        </tr>
+    }
+    </tbody>
+</table>
+
+<div>
+    <a asp-action="Index" class="btn btn-outline-secondary btn-sm">Back to Product List</a>
+</div>
+
+@section Scripts {
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const deleteForms = document.querySelectorAll(".delete-permanent-form");
+
+            deleteForms.forEach(form => {
+                form.addEventListener("submit", function (e) {
+                    e.preventDefault();
+
+                    Swal.fire({
+                        title: 'Delete permanently?',
+                        text: "This action cannot be undone!",
+                        icon: 'warning',
+                        showCancelButton: true,
+                        confirmButtonColor: '#d33',
+                        cancelButtonColor: '#6c757d',
+                        confirmButtonText: 'Yes, delete!',
+                        cancelButtonText: 'Cancel'
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            form.submit();
+                        }
+                    });
+                });
+            });
+        });
+    </script>
+}
