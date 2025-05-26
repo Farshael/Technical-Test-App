@@ -43,5 +43,9 @@ http://localhost:5000
 - Soft delete dan fitur restore
 - Tampilan antarmuka modern menggunakan Bootstrap
 
+## Entity Relationship Diagram (ERD)
+
+![ERD](ERD.png)
+
 
 --- 
