@@ -1,11 +1,14 @@
 @model IEnumerable<TechnicalTest.Models.Product>
 
 @{
-    ViewData["Title"] = "Trash";
+    ViewData["Title"] = "Trash - Product";
 }
 
-<h1>Deleted Products</h1>
 
+    <h1 class="mb-3">@ViewData["Title"]</h1>
+    <div>
+    <a asp-action="Index" class="btn btn-outline-secondary btn-sm">Back to List</a>
+</div>
 <table class="table">
     <thead>
         <tr>
@@ -36,9 +39,7 @@
     </tbody>
 </table>
 
-<div>
-    <a asp-action="Index" class="btn btn-outline-secondary btn-sm">Back to Product List</a>
-</div>
+
 
 @section Scripts {
     <script>

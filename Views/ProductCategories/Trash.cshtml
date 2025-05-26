@@ -17,8 +17,8 @@
     }
     else
     {
-        <table class="table table-bordered table-hover">
-            <thead class="table-light">
+        <table class="table">
+            <thead>
                 <tr>
                     <th>@Html.DisplayNameFor(model => model.Name)</th>
                     <th style="width: 220px;">Actions</th>
@@ -27,17 +27,23 @@
             <tbody>
                 @foreach (var item in Model)
                 {
-                    <tr>
-                        <td>@item.Name</td>
-                        <td>
-                            <form asp-action="Restore" asp-route-id="@item.Id" method="post" class="d-inline">
-                                <button type="submit" class="btn btn-outline-success btn-sm">Restore</button>
+                <tr>
+                    <td>@item.Name</td>
+                    <td>
+               
+                        <div class="d-inline-flex align-items-center gap-2">
+                            <form asp-action="Restore" asp-route-id="@item.Id" method="post">
+                                <button type="submit" class="btn btn-outline-primary btn-sm text-nowrap">Restore</button>
                             </form>
-                            <form asp-action="DeletePermanent" asp-route-id="@item.Id" method="post" class="delete-permanent-form d-inline">
-                                <button type="submit" class="btn btn-outline-danger btn-sm">Delete Permanently</button>
+                            <form asp-action="DeletePermanent" asp-route-id="@item.Id" method="post" class="delete-permanent-form">
+                                <button type="submit" class="btn btn-outline-danger btn-sm text-nowrap">Delete Permanently</button>
                             </form>
-                        </td>
-                    </tr>
+                        </div>
+                    </td>
+
+
+                </tr>
+
                 }
             </tbody>
         </table>
